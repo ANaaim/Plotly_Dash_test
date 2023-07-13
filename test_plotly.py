@@ -79,20 +79,22 @@ toto = Generation_Full_Article(10)
 
 app = Dash(__name__)
 
+# Read directly from the dataframe the different list aka extract the different unique values
+# I dont yet understand what value correspond ? 
 
 app.layout = html.Div([
     html.H4('Kinematics of the shoulder joint'),
     dcc.Graph(id="graph"),
     dcc.Checklist(
         id='mouvement',
-        options=['Mouvement_1','Mouvement_2','Mouvement_3','Mouvement_4'],
-        value=['Mouvement_1','Mouvement_2','Mouvement_3','Mouvement_4'],
+        options=sorted([i for i in toto.Mvt.unique()]),
+        value=sorted([i for i in toto.Mvt.unique()]),
         inline=True
     ),
     dcc.Checklist(
         id='Joint',
-        options= ['Humerothocracic angle','Glenohumeral angle','Scapulothoracic angle'],
-        value= ['Humerothocracic angle','Glenohumeral angle','Scapulothoracic angle'],
+        options= sorted([i for i in toto.Joint.unique()]),
+        value=sorted([i for i in toto.Joint.unique()]),
         inline=True
     ),
 ])
