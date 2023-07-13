@@ -31,18 +31,6 @@ def create_random_data(name_article,name_joint,name_dof,Angle_or_Translation, na
         
             
     return df
-## Create traces
-#fig = go.Figure()
-#fig.add_trace(go.Scatter(x=random_x, y=random_y0,
-#                    mode='lines',
-#                    name='lines'))
-#fig.add_trace(go.Scatter(x=random_x, y=random_y1,
-#                    mode='lines+markers',
-#                    name='lines+markers'))
-#fig.add_trace(go.Scatter(x=random_x, y=random_y2,
-#                    mode='markers', name='markers'))
-#
-#fig.show()
 
 def Generation_Full_Article (nb_article):
     nb_joint_by_article = [1,2,3]
@@ -86,9 +74,6 @@ toto = Generation_Full_Article(10)
 
 app = Dash(__name__)
 
-# Read directly from the dataframe the different list aka extract the different unique values
-# I dont yet understand what value correspond ? 
-
 app.layout = html.Div([
     html.H4('Kinematics of the shoulder joint'),
     dcc.Graph(id="graph"),
@@ -126,7 +111,7 @@ def update_line_chart(Mvt,Joint,Angle_Translation):
     mask_angle_translation = df.Angle_Translation.isin([Angle_Translation])
     if Angle_Translation == 'Angle':
         list_orga = ['Flexion','Abduction','External rotation']
-    else:
+    elif Angle_Translation == 'Translation':
         list_orga = ['X','Y','Z']
     fig = px.line(df[mask_mvt & mask_joint & mask_angle_translation], 
         x="Humerothoracic_angle", y="Value",color='Article',facet_row='Joint',facet_col='DoF',
