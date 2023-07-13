@@ -77,11 +77,10 @@ app = Dash(__name__)
 app.layout = html.Div([
     html.H4('Kinematics of the shoulder joint'),
     dcc.Graph(id="graph"),
-    dcc.Checklist(
+    dcc.Dropdown(
         id='Mouvement',
         options=sorted([i for i in toto.Mvt.unique()]),
-        value=sorted([i for i in toto.Mvt.unique()]),
-        inline=True
+        value=sorted([i for i in toto.Mvt.unique()])[0],
     ),
     dcc.Checklist(
         id='Joint',
@@ -91,12 +90,10 @@ app.layout = html.Div([
     ),
     dcc.Dropdown(options= sorted([i for i in toto.Angle_Translation.unique()]),
                 value=sorted([i for i in toto.Angle_Translation.unique()])[0],
-                id='Angle_Translation'),
-
+                id='Angle_Translation')
 ])
 
 # Add a common X Axis and Title
-
 @app.callback(
     Output("graph", "figure"), 
     Input('Mouvement', "value"),
@@ -105,8 +102,8 @@ app.layout = html.Div([
     )
 def update_line_chart(Mvt,Joint,Angle_Translation):
     df = toto # replace with your own data source
-    mask_mvt = df.Mvt.isin(Mvt)
     mask_joint = df.Joint.isin(Joint)
+    mask_mvt = df.Mvt.isin([Mvt])
     # We have to put Angle translation in a list because it is a string
     mask_angle_translation = df.Angle_Translation.isin([Angle_Translation])
     if Angle_Translation == 'Angle':
