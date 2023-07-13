@@ -118,14 +118,19 @@ app.layout = html.Div([
     Input('Joint', "value"),
     Input('Angle_Translation',"value")
     )
-def update_line_chart(Mvt,Joint,Angle_Transalation):
+def update_line_chart(Mvt,Joint,Angle_Translation):
     df = toto # replace with your own data source
     mask_mvt = df.Mvt.isin(Mvt)
     mask_joint = df.Joint.isin(Joint)
     # We have to put Angle translation in a list because it is a string
-    mask_angle_translation = df.Angle_Translation.isin([Angle_Transalation])
+    mask_angle_translation = df.Angle_Translation.isin([Angle_Translation])
+    if Angle_Translation == 'Angle':
+        list_orga = ['Flexion','Abduction','External rotation']
+    else:
+        list_orga = ['X','Y','Z']
     fig = px.line(df[mask_mvt & mask_joint & mask_angle_translation], 
-        x="Humerothoracic_angle", y="Value",color='Article',facet_row='Joint',facet_col='DoF')
+        x="Humerothoracic_angle", y="Value",color='Article',facet_row='Joint',facet_col='DoF',
+        category_orders={"DoF": list_orga})
     # Allow to remove the "Mvt=" in the legend
     fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
     
