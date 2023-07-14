@@ -117,16 +117,25 @@ def update_line_chart(Mvt,Joint,Angle_Translation):
     fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
     
     fig.update_layout(
-    autosize=True,
-    width=1250,
-    height=900,
-    margin=dict(
-        l=50,
-        r=50,
-        b=100,
-        t=100,
-        pad=4
-    ))
+    height=800,
+    width=1500,
+    paper_bgcolor="rgba(255,255,255,1)",
+    plot_bgcolor="rgba(255,255,255,1)",
+    legend=dict(
+    title_font_family="Times New Roman",
+    font=dict(family="Times New Roman", color="black", size=11),
+    orientation="h",
+    xanchor="center",
+    x=0.5,
+    y=-0.05,
+    ),
+    font=dict(
+    size=12,
+    family="Times New Roman",
+    ),
+    yaxis=dict(color="black"), template="simple_white",
+    boxgap=0.2,
+    )
     return fig
 
 
