@@ -6,7 +6,6 @@ import pandas as pd
 # Create random data with numpy
 import numpy as np
 import random
-np.random.seed(1)
 
 def create_random_data(name_article,name_joint,name_dof,Angle_or_Translation, name_movement,nb_frame,initialize = False):
     
@@ -70,7 +69,7 @@ def Generation_Full_Article (nb_article):
 
     return df
 
-toto = Generation_Full_Article(10)
+toto = Generation_Full_Article(30)
 
 app = Dash(__name__)
 
@@ -106,13 +105,16 @@ def update_line_chart(Mvt,Joint,Angle_Translation):
     mask_mvt = df.Mvt.isin([Mvt])
     # We have to put Angle translation in a list because it is a string
     mask_angle_translation = df.Angle_Translation.isin([Angle_Translation])
+    # In order to have the data in the correct orger we have to define a list ordering the data
+    list_joint_graph = ['Humerothocracic angle','Glenohumeral angle','Scapulothoracic angle']
     if Angle_Translation == 'Angle':
         list_orga = ['Flexion','Abduction','External rotation']
     elif Angle_Translation == 'Translation':
         list_orga = ['X','Y','Z']
     fig = px.line(df[mask_mvt & mask_joint & mask_angle_translation], 
         x="Humerothoracic_angle", y="Value",color='Article',facet_row='Joint',facet_col='DoF',
-        category_orders={"DoF": list_orga})
+        category_orders={"DoF": list_orga,
+                         "Joint": list_joint_graph})
     # Allow to remove the "Mvt=" in the legend
     fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
     
