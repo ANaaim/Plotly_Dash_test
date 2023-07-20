@@ -7,6 +7,10 @@ import pandas as pd
 import numpy as np
 import random
 
+# TODO : Put the correct joint in the article. 
+# TODO : article mis sur le coté
+# TODO : Add a curve directly from the app running
+# TODO : be able to switch from format artcile et format 16/9 (écran)
 def create_random_data(name_article,name_joint,name_dof,Angle_or_Translation, name_movement,nb_frame,initialize = False):
     
     if initialize:
@@ -37,7 +41,7 @@ def Generation_Full_Article (nb_article):
     nb_dof_by_joint_translation = [0,1,2,3]
     nb_movement_by_article = [1,2,3,4]
 
-    name_joints = ['Humerothocracic angle','Glenohumeral angle','Scapulothoracic angle']
+    name_joints = ['Humerothocracic angle','Acromioclaviculaire','Glenohumeral angle','Scapulothoracic angle']
     name_movements = ['Mouvement_1','Mouvement_2','Mouvement_3','Mouvement_4']
     DoF_translation = ['X','Y','Z']
     DoF_angle = ['Flexion','Abduction','External rotation']
@@ -70,7 +74,8 @@ def Generation_Full_Article (nb_article):
     return df
 
 toto = Generation_Full_Article(30)
-
+import pdb
+pdb.set_trace()
 app = Dash(__name__)
 
 app.layout = html.Div([
